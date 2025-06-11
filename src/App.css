@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0;
+}
+
+.calculator {
+  width: 320px;
+  height: 450px; /* Added fixed height */
+  margin: 0 auto; /* Removed the large margin */
+  background: #222;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.display {
+  background: #333;
+  color: white;
+  font-size: 48px;
+  padding: 20px;
+  text-align: right;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr); /* Added fixed rows */
+  gap: 8px;
+  height: 320px; /* Added fixed height for buttons container */
+}
+
+button {
+  background: #666;
+  border: none;
+  padding: 0; /* Remove padding to prevent overflow */
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  height: 100%; /* Make buttons fill their grid cells */
+  width: 100%; /* Make buttons fill their grid cells */
+}
+
+button:hover {
+  background: #999;
+}
+
+.operator {
+  background: #ff9500;
+}
+
+.operator:hover {
+  background: #ffaa33;
+}
+
+.clear {
+  background: #ff3b30;
+}
+
+.clear:hover {
+  background: #ff6961;
+}
+
+.advanced {
+  background: #34c759;
+}
+
+.advanced:hover {
+  background: #4cd964;
+}
+
+.zero {
+  grid-column: span 1; /* Changed to take up only one column */
+}
+

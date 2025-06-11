@@ -4,7 +4,7 @@ A  calculator built with React that supports basic arithmetic operations.
 
 ## Preview
 
-![Calculator Preview](./assets/calculator.png)
+![Calculator Preview](.src/assets/calculator.png)
 
 ## Features
 

@@ -27,6 +27,13 @@ body {
   margin-bottom: 20px;
   overflow: hidden;
   white-space: nowrap;
+    height: 80px; /* Add fixed height */
+  width: 320px; /* Add fixed width */
+  box-sizing: border-box; /* Include padding in width/height calculation */
+  text-overflow: ellipsis;
+   display: flex;
+  justify-content: flex-end; /* This keeps text right-aligned */
+  align-items: center;
 }
 
 .buttons {

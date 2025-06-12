@@ -2,103 +2,80 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [display, setDisplay] = useState(0);
-  const [firstOperand, setFirstOperand] = useState(null);
-  const [operator, setOperator] = useState(null);
-  const [waitingForSecondOperand, setWaitingForSecondOperand] = useState(false);
+  const [display, setDisplay] = useState("0");
+ const [isResult, setIsResult] = useState(false);
+  const handleButtonClick = (value) => {
+    const isOperator = ['+', '-', '*', '/'].includes(value);
 
-  const inputDigit = (digit) => {
-    if (waitingForSecondOperand) {
-      setDisplay(digit);
-      setWaitingForSecondOperand(false);
+    if (isResult) {
+      if (isOperator) {
+        // If it's an operator, append it to the current result
+        setDisplay(display + value);
+      } else {
+        // If it's a number, start fresh
+        setDisplay(value);
+      }
+      setIsResult(false);
+    } else if (display === "0" && !isOperator) {
+      setDisplay(value);
     } else {
-      setDisplay(display === "0" ? digit : display + digit);
+      setDisplay(display + value);
     }
   };
 
-  const inputDecimal = () => {
-    if (!display.includes(".")) {
-      setDisplay(display + ".");
-    }
-  };
-
-  const clearDisplay = () => {
+  const handleClear = () => {
     setDisplay("0");
-    setFirstOperand(null);
-    setOperator(null);
-    setWaitingForSecondOperand(false);
+    setIsResult(false);
   };
 
-  const performOperation = (nextOperator) => {
-    const inputValue = parseFloat(display);
-
-    if (firstOperand === null) {
-      setFirstOperand(inputValue);
-    } else if (operator) {
-      const result = calculate(firstOperand, inputValue, operator);
+    const calculateResult = () => {
+    try {
+  
+      const result = new Function('return ' + display)();
       setDisplay(String(result));
-      setFirstOperand(result);
-    }
-
-    setWaitingForSecondOperand(true);
-    setOperator(nextOperator);
-  };
-
-  const calculate = (firstOperand, secondOperand, operator) => {
-    switch (operator) {
-      case "+":
-        return firstOperand + secondOperand;
-      case "-":
-        return firstOperand - secondOperand;
-      case "*":
-        return firstOperand * secondOperand;
-      case "/":
-        return firstOperand / secondOperand;
-      default:
-        return secondOperand;
+        setIsResult(true);
+    } catch (error) {
+      setDisplay("Error");
     }
   };
-
   return (
     <div className="calculator">
       <div className="display">{display}</div>
       <div className="buttons">
-        <button onClick={clearDisplay} className="clear">
+        <button onClick={() => handleClear()}className="clear">
           AC
         </button>
         <button className="advanced">...</button>
-           <button className="advanced">...</button>
-           <button onClick={() => performOperation("/")} className="operator">
+        <button className="advanced">...</button>
+        <button onClick={() => handleButtonClick("/")} className="operator">
           /
         </button>
-        <button onClick={() => inputDigit(7)}>7</button>
-        <button onClick={() => inputDigit(8)}>8</button>
-        <button onClick={() => inputDigit(9)}>9</button>
-         <button onClick={() => performOperation("*")} className="operator">
+        <button onClick={() => handleButtonClick("7")} >7</button>
+        <button onClick={() => handleButtonClick("8")}>8</button>
+        <button onClick={() => handleButtonClick("9")}>9</button>
+        <button onClick={() => handleButtonClick("*")} className="operator">
           ×
         </button>
-        
-        <button onClick={() => inputDigit(4)}>4</button>
-        <button onClick={() => inputDigit(5)}>5</button>
-        <button onClick={() => inputDigit(6)}>6</button>
-        <button onClick={() => performOperation("-")} className="operator">
+        <button onClick={() => handleButtonClick("4")}>4</button>
+        <button onClick={() => handleButtonClick("5")}>5</button>
+        <button onClick={() => handleButtonClick("6")} >6</button>
+        <button onClick={() => handleButtonClick("-")} className="operator">
           -
         </button>
-        <button onClick={() => inputDigit(1)}>1</button>
-        <button onClick={() => inputDigit(2)}>2</button>
-        <button onClick={() => inputDigit(3)}>3</button>
-         <button onClick={() => performOperation("+")} className="operator">
+        <button onClick={() => handleButtonClick("1")}>1</button>
+        <button onClick={() => handleButtonClick("2")}>2</button>
+        <button onClick={() => handleButtonClick("3")}>3</button>
+        <button onClick={() => handleButtonClick("+")} className="operator">
           +
         </button>
-        <button onClick={() => inputDigit(0)} className="zero">
+        <button onClick={() => handleButtonClick("0")} className="zero">
           0
         </button>
-        <button onClick={inputDecimal}>.</button>
-         <button ></button>
-        <button onClick={() => performOperation("=")} className="operator">
+        <button onClick={() => handleButtonClick(".")}>.</button>
+        <button></button>
+        <button onClick={calculateResult} className="operator">
           =
         </button>
-      
       </div>
     </div>
   );
